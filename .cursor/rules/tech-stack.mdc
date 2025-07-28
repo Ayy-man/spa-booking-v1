@@ -1,0 +1,33 @@
+# Tech Stack Rules
+
+## Framework & Libraries
+- Next.js 14 (App Router)
+- TypeScript (strict mode)
+- React 18
+- Tailwind CSS
+- Shadcn/ui components
+- FullCalendar for scheduling
+- Zod for validation
+- React Hook Form
+- Supabase client SDK
+
+## Database
+- Supabase (PostgreSQL)
+- Prisma for schema management (optional)
+- Service role for mutations
+- RLS for read operations only
+
+## Patterns
+- Server Components by default
+- Client Components only when needed
+- Server Actions for mutations
+- Parallel route loading
+- Error boundaries on all pages
+
+## Code Style
+- Functional components only
+- Explicit imports (no wildcards)
+- Async/await over promises
+- Early returns for validation
+- Descriptive variable names
+- Comments only for complex logic

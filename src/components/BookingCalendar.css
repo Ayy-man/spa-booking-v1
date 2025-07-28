@@ -1,0 +1,62 @@
+/* BookingCalendar Custom Styles - Premium Spa Theme */
+
+.booking-calendar {
+  /* Custom CSS variables for consistent theming */
+  --spa-primary: #0ea5e9;
+  --spa-primary-dark: #0284c7;
+  --spa-accent: #22c55e;
+  --spa-background: rgba(240, 249, 255, 0.7);
+  --spa-glass: rgba(255, 255, 255, 0.7);
+  --spa-border: rgba(255, 255, 255, 0.2);
+  --spa-shadow: 0 8px 32px rgba(14, 165, 233, 0.1);
+}
+
+/* Date Picker Styling */
+.date-picker {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Time Slot Picker Styling */
+.time-slot-picker {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Animation for smooth transitions */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Accessibility Improvements */
+.date-picker button:focus,
+.time-slot-picker button:focus {
+  outline: 2px solid var(--spa-primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .date-picker button,
+  .time-slot-picker button {
+    border: 2px solid currentColor !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .date-picker button,
+  .time-slot-picker button {
+    transition: none !important;
+  }
+  
+  .date-picker button:hover,
+  .time-slot-picker button:hover {
+    transform: none !important;
+  }
+}

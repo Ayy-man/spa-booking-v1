@@ -1,0 +1,41 @@
+# Dermal Spa Booking System Rules
+
+## Project Overview
+Building a dual-interface booking system:
+1. Customer booking website with smart room logic
+2. Staff dashboard with anonymized customer data
+
+## Key Business Rules
+- Room 1: Single bed only
+- Room 2: 2 beds (couples or singles with curtain)
+- Room 3: 2 beds (couples or singles, allows body scrubs)
+- Body scrubs ONLY in Room 3
+- Couple services need both beds in same room
+- Single services show room as "occupied" even if one bed free
+
+## Core Features
+- Voice agent integration via webhooks
+- WhatsApp messaging for booking links
+- Smart calendar showing available rooms based on service type
+- Staff see only: time, service, room (NO customer details)
+- Admin (Selma) sees everything
+
+## Tech Decisions
+- Next.js 14 with App Router
+- Supabase for database and auth
+- Tailwind CSS for styling
+- FullCalendar for booking interface
+- Server-side mutations only (no client-side database writes)
+
+## Security Requirements
+- All customer data stored in secure tables
+- Separate anonymized records for staff view
+- JWT authentication for dashboard access
+- Row Level Security for read operations only
+
+## Response Style
+- Be direct and provide actual code
+- Skip explanations unless asked
+- Assume I understand the basics
+- Always use TypeScript
+- Generate complete, working components
