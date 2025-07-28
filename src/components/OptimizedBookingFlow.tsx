@@ -163,7 +163,11 @@ const OptimizedBookingFlow: React.FC<OptimizedBookingFlowProps> = ({
       roomId: selectedRoom.id,
       date: selectedDate.toISOString().split('T')[0],
       time: selectedTime,
-      specialRequests: specialRequests || undefined
+      specialRequests: specialRequests || undefined,
+      customerFirstName: '',
+      customerLastName: '',
+      customerEmail: '',
+      customerPhone: ''
     }
 
     onBookingComplete?.(bookingData)

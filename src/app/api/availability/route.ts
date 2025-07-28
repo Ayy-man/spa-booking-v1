@@ -15,7 +15,7 @@ import {
   getTimeSlotAvailability, 
   getFullAvailability,
   preloadAvailability 
-} from '@/lib/availability'
+} from '@/lib/availability-simple'
 import { AvailabilityQuery } from '@/types'
 
 // =====================================================
