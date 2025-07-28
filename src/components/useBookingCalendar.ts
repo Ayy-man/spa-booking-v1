@@ -328,6 +328,8 @@ export const useBookingCalendar = (options: UseBookingCalendarOptions = {}): Use
       const result = await response.json()
       
       if (!response.ok || !result.success) {
+        console.error('API Error Response:', result)
+        console.error('Validation Details:', result.details)
         throw new Error(result.error || 'Failed to create booking')
       }
       

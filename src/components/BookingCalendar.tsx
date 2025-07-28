@@ -182,7 +182,7 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       await onBookingSubmit({
         serviceId: selectedSlot.service.id,
         date: selectedSlot.date,
-        time: selectedSlot.startTime,
+        time: selectedTime!, // Use the display time format (h:MM AM/PM) instead of ISO string
         notes: notes.trim() || undefined,
         customerFirstName: customerFirstName.trim(),
         customerLastName: customerLastName.trim(),
