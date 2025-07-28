@@ -10,7 +10,7 @@ import { Service, BookingFormData } from '@/types'
 const realServices: Service[] = [
   // Facial Treatments
   {
-    id: '1',
+    id: 'e0924e8a-5155-40ee-9d54-ef0a3a88e324',
     name: 'Basic Facial',
     description: 'A gentle cleansing and moisturizing facial treatment perfect for all skin types.',
     duration: 60,
@@ -138,7 +138,7 @@ const realServices: Service[] = [
     updatedAt: new Date().toISOString()
   },
   {
-    id: '10',
+    id: '4bea8217-83bb-4bea-98b6-4166c12b88e7',
     name: 'Hot Stone Massage',
     description: 'Therapeutic massage using heated stones to melt away tension.',
     duration: 90,
@@ -180,7 +180,7 @@ const realServices: Service[] = [
     updatedAt: new Date().toISOString()
   },
   {
-    id: '13',
+    id: 'a0a7942d-a62f-407c-acd8-3035e0e4238a',
     name: 'Couples Massage',
     description: 'Side-by-side massage experience for two people.',
     duration: 60,
@@ -196,7 +196,7 @@ const realServices: Service[] = [
   
   // Hair Removal Services
   {
-    id: '14',
+    id: '70cdd2f9-b25e-4e5b-872c-8fd66f2ee8e9',
     name: 'Brazilian Wax - Women',
     description: 'Complete intimate area hair removal for women using professional wax.',
     duration: 45,
@@ -352,7 +352,7 @@ const realServices: Service[] = [
   
   // Body Treatments
   {
-    id: '25',
+    id: 'd8beae5f-967e-4d4c-adf2-76756f09f1d7',
     name: 'Body Scrub',
     description: 'Full-body exfoliation treatment to remove dead skin cells.',
     duration: 45,

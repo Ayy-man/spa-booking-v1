@@ -34,7 +34,7 @@ interface UseBookingCalendarReturn extends BookingCalendarState {
   setSelectedService: (service: Service | null) => void
   setSelectedDate: (date: Date | null) => void
   refreshAvailability: () => Promise<void>
-  submitBooking: (data: BookingFormData) => Promise<void>
+  submitBooking: (data: BookingFormData) => Promise<any>
   
   // Computed values
   filteredServices: Service[]
@@ -306,15 +306,40 @@ export const useBookingCalendar = (options: UseBookingCalendarOptions = {}): Use
     setState(prev => ({ ...prev, isLoading: true, error: null }))
     
     try {
-      // In a real app, this would be an API call to create the booking
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate API delay
+      // Make actual API call to create booking with customer info
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          serviceId: state.selectedService?.id,
+          date: data.date,
+          time: data.time,
+          specialRequests: data.notes || '',
+          // Customer information
+          customerFirstName: data.customerFirstName,
+          customerLastName: data.customerLastName,
+          customerEmail: data.customerEmail,
+          customerPhone: data.customerPhone
+        }),
+      })
+
+      const result = await response.json()
       
-      console.log('Booking submitted:', data)
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Failed to create booking')
+      }
+      
+      console.log('Booking created successfully:', result.data)
       
       // Refresh availability after successful booking
       await refreshAvailability()
       
       setState(prev => ({ ...prev, isLoading: false }))
+      
+      // Return the booking result for the confirmation message
+      return result
     } catch (error) {
       console.error('Failed to submit booking:', error)
       setState(prev => ({
@@ -324,7 +349,7 @@ export const useBookingCalendar = (options: UseBookingCalendarOptions = {}): Use
       }))
       throw error
     }
-  }, [refreshAvailability])
+  }, [refreshAvailability, state.selectedService])
 
   return {
     // State

@@ -139,6 +139,11 @@ export interface BookingFormData {
   time: string // HH:MM format
   specialRequests?: string
   notes?: string
+  // Customer information
+  customerFirstName: string
+  customerLastName: string
+  customerEmail: string
+  customerPhone: string
 }
 
 export interface BookingStep {

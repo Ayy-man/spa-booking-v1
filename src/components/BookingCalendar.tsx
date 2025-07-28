@@ -92,6 +92,12 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [notes, setNotes] = useState('')
+  
+  // Customer information state
+  const [customerFirstName, setCustomerFirstName] = useState('')
+  const [customerLastName, setCustomerLastName] = useState('')
+  const [customerEmail, setCustomerEmail] = useState('')
+  const [customerPhone, setCustomerPhone] = useState('')
 
   // Update selected service when preSelectedService changes
   useEffect(() => {
@@ -167,11 +173,21 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
     
     setIsSubmitting(true)
     try {
+      // Validate required customer fields
+      if (!customerFirstName.trim() || !customerLastName.trim() || !customerEmail.trim() || !customerPhone.trim()) {
+        alert('Please fill in all required customer information fields.')
+        return
+      }
+
       await onBookingSubmit({
         serviceId: selectedSlot.service.id,
         date: selectedSlot.date,
         time: selectedSlot.startTime,
-        notes: notes.trim() || undefined
+        notes: notes.trim() || undefined,
+        customerFirstName: customerFirstName.trim(),
+        customerLastName: customerLastName.trim(),
+        customerEmail: customerEmail.trim(),
+        customerPhone: customerPhone.trim()
       })
       
       // Reset form state
@@ -179,6 +195,10 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
       setSelectedSlot(null)
       setSelectedTime(null)
       setNotes('')
+      setCustomerFirstName('')
+      setCustomerLastName('')
+      setCustomerEmail('')
+      setCustomerPhone('')
     } catch (error) {
       console.error('Booking submission failed:', error)
     } finally {
@@ -400,6 +420,71 @@ const BookingCalendar: React.FC<BookingCalendarProps> = ({
                         </p>
                         <p className="text-sm text-gray-600">Time</p>
                       </div>
+                    </div>
+                  </div>
+
+                  {/* Customer Information */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
+                      Contact Information
+                    </h3>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          First Name *
+                        </label>
+                        <input
+                          type="text"
+                          value={customerFirstName}
+                          onChange={(e) => setCustomerFirstName(e.target.value)}
+                          placeholder="Enter your first name"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-spa-500 focus:border-spa-500"
+                          required
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Last Name *
+                        </label>
+                        <input
+                          type="text"
+                          value={customerLastName}
+                          onChange={(e) => setCustomerLastName(e.target.value)}
+                          placeholder="Enter your last name"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-spa-500 focus:border-spa-500"
+                          required
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        value={customerEmail}
+                        onChange={(e) => setCustomerEmail(e.target.value)}
+                        placeholder="Enter your email address"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-spa-500 focus:border-spa-500"
+                        required
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Phone Number *
+                      </label>
+                      <input
+                        type="tel"
+                        value={customerPhone}
+                        onChange={(e) => setCustomerPhone(e.target.value)}
+                        placeholder="Enter your phone number"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-spa-500 focus:border-spa-500"
+                        required
+                      />
                     </div>
                   </div>
 

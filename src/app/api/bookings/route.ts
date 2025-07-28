@@ -30,11 +30,14 @@ const BookingCreateSchema = z.object({
   serviceId: z.string().uuid('Invalid service ID format'),
   staffId: z.string().uuid('Invalid staff ID format').optional(),
   roomId: z.string().uuid('Invalid room ID format').optional(),
-  customerId: z.string().uuid('Invalid customer ID format'),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be in YYYY-MM-DD format'),
   time: z.string().regex(/^(1[0-2]|[1-9]):[0-5][0-9]\s*(AM|PM)$/i, 'Time must be in h:MM AM/PM format'),
   specialRequests: z.string().optional(),
-  internalNotes: z.string().optional()
+  // Customer information (replaces customerId)
+  customerFirstName: z.string().min(1, 'First name is required'),
+  customerLastName: z.string().min(1, 'Last name is required'),
+  customerEmail: z.string().email('Valid email is required'),
+  customerPhone: z.string().min(10, 'Phone number must be at least 10 characters')
 })
 
 const BookingUpdateSchema = z.object({
@@ -248,7 +251,45 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { serviceId, staffId, roomId, customerId, date, time, specialRequests, internalNotes } = validationResult.data
+    const { serviceId, staffId, roomId, date, time, specialRequests, customerFirstName, customerLastName, customerEmail, customerPhone } = validationResult.data
+
+    // Find or create customer based on email
+    let customerId: string
+    const { data: existingCustomer } = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', customerEmail)
+      .eq('role', 'customer')
+      .single()
+
+    if (existingCustomer) {
+      customerId = existingCustomer.id
+    } else {
+      // Create new customer
+      const { data: newCustomer, error: customerError } = await supabase
+        .from('users')
+        .insert({
+          email: customerEmail,
+          first_name: customerFirstName,
+          last_name: customerLastName,
+          phone: customerPhone,
+          role: 'customer'
+        })
+        .select('id')
+        .single()
+
+      if (customerError || !newCustomer) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'Failed to create customer account'
+          },
+          { status: 500 }
+        )
+      }
+
+      customerId = newCustomer.id
+    }
 
     // Convert display time to database format
     const startTime = parseTimeToDatabase(time)
